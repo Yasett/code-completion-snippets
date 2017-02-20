@@ -174,10 +174,13 @@ public class Test {
 	
 	/*Find the intersection of two sets*/
 	public void setIntersection() {
-		Set<String> oddNumbers = ImmutableSet.of("one", "three", "five", "seven");
-		Set<String> primeNumbers = ImmutableSet.of("two", "three", "five", "seven");
+		Set<Integer> oddNumbers = new TreeSet<Integer>();
+		for (int i = 1; i <= 9; i += 2) {
+			oddNumbers.add(i);
+		}
+		Set<Integer> primeNumbers = ImmutableSet.of(2, 3, 5, 7);
 
-		SetView<String> intersection = Sets.intersection(primeNumbers, oddNumbers); // "three", "five", "seven"
+		SetView<Integer> intersection = Sets.intersection(primeNumbers, oddNumbers); // 3, 5, 7
 	}
 	
 	/*Split a String*/
@@ -206,10 +209,13 @@ public class Test {
 	
 	/*Join two sets*/
 	public void setUnion() {
-		Set<String> oddNumbers = ImmutableSet.of("one", "three", "five", "seven");
-		Set<String> primeNumbers = ImmutableSet.of("two", "three", "five", "seven");
+		Set<Integer> oddNumbers = new TreeSet<Integer>();
+		for (int i = 1; i <= 9; i += 2) {
+			oddNumbers.add(i);
+		}
+		Set<Integer> primeNumbers = ImmutableSet.of(2, 3, 5, 7);
 
-		SetView<String> union = Sets.union(primeNumbers, oddNumbers); // "two", "three", "five", "seven", "one"	
+		SetView<Integer> union = Sets.union(primeNumbers, oddNumbers); // 2, 3, 5, 7, 1, 9	
 	}
 	
 	/*Read all the lines from a file at a time*/
@@ -298,5 +304,10 @@ public class Test {
 		//Adds 1 and 2 as nodes of this graph, and put an edge between them
 		graph.putEdge(1, 2);  
 		boolean isNodePresent = graph.nodes().contains(1);
+	}
+	
+	/*Calculate factorial of an integer*/
+	public void calculateFactorial() {
+		int factorial = IntMath.factorial(4);
 	}
 }
