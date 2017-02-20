@@ -39,7 +39,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 
-public class Test {
+public class Guava {
 
 	/*Filter digits and special characters from a String*/
 	public void digitMatcher(){
