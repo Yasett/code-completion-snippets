@@ -55,7 +55,14 @@ public class Snippet {
 
 	/*Create a file*/
 	public void createFile() {
-		File fileFromPath = Paths.get("file_path.ext").toFile();
+		try {
+			File fileFromPath = Paths.get("file_path.ext").toFile();
+			if (!fileFromPath.exists()) {
+				Files.createFile(Paths.get("file_path.ext"));
+			}
+		} catch (IOException e) {
+			//TODO: Handle exception
+		}
 	}
 
 	/*Get the relative path of a file*/
