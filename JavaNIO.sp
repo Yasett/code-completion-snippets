@@ -81,7 +81,7 @@ public class Snippet {
 
 		try {
 			Path path = Paths.get("file_path.ext");
-			OutputStream outputStream = Files.newOutputStream(path, StandardOpenOption.CREATE_NEW);
+			OutputStream outputStream = Files.newOutputStream(path, StandardOpenOption.APPEND);
 			for (String line : lines) {
 				outputStream.write((line + System.lineSeparator()).getBytes(StandardCharsets.UTF_8));
 			}
