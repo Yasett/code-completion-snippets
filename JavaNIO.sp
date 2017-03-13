@@ -297,7 +297,7 @@ public class Snippet {
 		}
 	}
 	
-	/*Rea file using FileChannel*/
+	/*Read file using FileChannel*/
 	public void readFileUsingFileChannel() {
 		RandomAccessFile file = null;
 		try {
