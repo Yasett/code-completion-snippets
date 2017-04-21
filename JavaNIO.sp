@@ -83,8 +83,8 @@ public class Snippet {
 
 	/*Write in a file*/
 	public void writeFile() {
-		List<String> lines = Arrays.asList(String.valueOf(Calendar.getInstance().getTimeInMillis()), "linea de prueba",
-				"linea de prueba 2");
+		List<String> lines = Arrays.asList(String.valueOf(Calendar.getInstance().getTimeInMillis()), "test line",
+				"test line 2");
 
 		try {
 			Path path = Paths.get("file_path.ext");
@@ -106,8 +106,7 @@ public class Snippet {
 			
 			Files.walkFileTree(folder, EnumSet.noneOf(FileVisitOption.class), 1, new SimpleFileVisitor<Path>() {
 				@Override
-				public FileVisitResult preVisitDirectory(Path selectedPath, BasicFileAttributes attrs)
-						throws IOException {
+				public FileVisitResult preVisitDirectory(Path selectedPath, BasicFileAttributes attrs) throws IOException {
 					System.out.println("Folder " + selectedPath.toAbsolutePath());
 					return FileVisitResult.CONTINUE;
 				}
@@ -138,7 +137,6 @@ public class Snippet {
 				FileChannel sinkChanel = fos.getChannel();) {			
 				
 				srcChannel.transferTo(0, srcChannel.size(), sinkChanel);
-
 			
 		} catch (Exception e) {
 			//TODO: Handle exception
@@ -147,7 +145,8 @@ public class Snippet {
 	
 	/*Create a link to a file*/
 	public void createLink() {
-	    final String linkPath = "D://"; //Path where the link will be created
+		//Path where the link will be created
+	    final String linkPath = "D://"; 
 	    final String existingFilePath = "D://file_path.ext";
 	    final Path link = FileSystems.getDefault().getPath(linkPath);
 	    final Path existingFile = FileSystems.getDefault().getPath(existingFilePath);
@@ -166,7 +165,7 @@ public class Snippet {
 	public void isHidden(){
 	    String path = "D://file_path.ext";
 	    try {
-	    	boolean isHidden = Files.isHidden(FileSystems.getDefault().getPath(path));
+	    	boolean hidden = Files.isHidden(FileSystems.getDefault().getPath(path));
 		} catch (IOException ioe) {
 			//TODO: Handle exception
 		}
@@ -176,7 +175,8 @@ public class Snippet {
 	public void relativizeSuperset() {
 	    Path path = FileSystems.getDefault().getPath("/a/b");
 	    Path other = FileSystems.getDefault().getPath("/a/b/c/d");
-	    Path relativePath = path.relativize(other);//returns c\d
+	    //The result is c\d
+	    Path relativePath = path.relativize(other);
 	}
 	
 	/*Delete subfolder and files recursively*/
@@ -241,7 +241,6 @@ public class Snippet {
 			List<WatchEvent<?>> events = watckKey.pollEvents();
 			for (WatchEvent<?> event : events) {
 				System.out.println("Nuevo archivo creado '" + event.context().toString() + "'.");
-
 			}
 		} catch (Exception e) {
 			// TODO: Handle exception
@@ -255,23 +254,22 @@ public class Snippet {
 		RandomAccessFile memoryMappedFile;
 		try {
 			memoryMappedFile = new RandomAccessFile(fn, "rw");
-			// Mapear el archivo en memoria
+			// Map file in memory
 			MappedByteBuffer out;
 			out = memoryMappedFile.getChannel().map(FileChannel.MapMode.READ_WRITE, 0, mem_map_size);
 			
-			// Escribir en el archivo mapeado en memoria
+			// Write in the memory mapped file
 			for (int i = 0; i < mem_map_size; i++) {
 				out.put((byte) 'A');
 			}
 			
-			// Leer desde el archivo mapeado en memoria
+			// Read from the memory mapped file
 			for (int i = 0; i < 30; i++) {
 				System.out.print((char) out.get(i));
 			}
 			
 		} catch (FileNotFoundException e) {
 			// TODO: Handle exception
-
 		} catch (IOException e) {
 			// TODO: Handle exception
 		}
@@ -315,7 +313,6 @@ public class Snippet {
 
 				buffer.clear();
 				bytes = fileChannel.read(buffer);
-
 			}
 
 		} catch (IOException e) {
@@ -406,16 +403,14 @@ public class Snippet {
 	    Selector selector;
         
         try {
-            // Abrir un selector y un ServerSocketChannel
+            // Open a selector and a ServerSocketChannel
             selector = Selector.open();
-            serverChannel = ServerSocketChannel.open();
-            
-            // Configurar un ServerSocketChannel como non-blocking.
+            serverChannel = ServerSocketChannel.open();            
+            // Configure a ServerSocketChannel as non-blocking
             serverChannel.configureBlocking(false);
-            // enlazar a la direccion del servidor
-            serverChannel.socket().bind(new InetSocketAddress(address, port));
- 
-            //Registrar el serverSocketChannel para aceptar conexiones
+            // Bind to the server address
+            serverChannel.socket().bind(new InetSocketAddress(address, port)); 
+            //Register the serverSocketChannel to accept connections
             serverChannel.register(selector, SelectionKey.OP_ACCEPT);
  
         } catch (IOException e) {
@@ -465,9 +460,7 @@ public class Snippet {
             Files.move(fromFolder.toPath(), toFolder.toPath(), 
                     StandardCopyOption.ATOMIC_MOVE,
                     StandardCopyOption.REPLACE_EXISTING,
-                    StandardCopyOption.COPY_ATTRIBUTES
-                    );
-            
+                    StandardCopyOption.COPY_ATTRIBUTES);            
         } catch (IOException e) {
         	// TODO: Handle exception
         }
@@ -476,9 +469,7 @@ public class Snippet {
 	/*Read and write custom attributes of a file*/
 	public void readWriteCustomAttribute() {	    
 		Path file = FileSystems.getDefault().getPath("D://file_path.ext");
-
 	    UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
-
 	    String nombreAtributo = "custom_attribute";
 	    String valorAtributo = "sample_value";
 
@@ -488,8 +479,7 @@ public class Snippet {
 			    writeBuffer.put(bytes);
 			    writeBuffer.flip();
 			    view.write(nombreAtributo, writeBuffer);
-
-			    // Leer la propiedad
+			    // Read the property
 			    final ByteBuffer readBuffer = ByteBuffer.allocate(view.size(nombreAtributo));
 			    view.read(nombreAtributo, readBuffer);
 			    readBuffer.flip();
@@ -528,24 +518,18 @@ public class Snippet {
 	/*Read file asynchronously*/
 	public void readFileAsynchronously() {
 		ByteBuffer buffer = ByteBuffer.allocate(1000);
-
 		Path path = FileSystems.getDefault().getPath("D://file_path.ext");
-
 		try (AsynchronousFileChannel asyncChannel = AsynchronousFileChannel.open(path)) {
-
 			Future<Integer> fileResult = asyncChannel.read(buffer, 0);
-			
+						
 			while (!fileResult.isDone()) {
 				System.out.println("Waiting until file reading is complete ...");
 			}
 
 			//Restart the buffer current position				
 			buffer.flip();
-
 			// Decode and show the contents of the byte buffer
 			System.out.println(Charset.defaultCharset().decode(buffer));
-			
-
 		} catch (IOException ex) {
 			// TODO: Handle exception
 		}
