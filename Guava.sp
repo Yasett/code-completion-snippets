@@ -39,8 +39,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 
-public class Guava {
-
+public class Test {
 	/*Filter digits and special characters from a String*/
 	public void digitMatcher(){
 		String input = "El identificador del recibo es 19210/10";
@@ -142,10 +141,11 @@ public class Guava {
 		map.put(2, "Second");
 		map.put(3, "Third");
 		
+		//Cache expires after 30 minutes of access and can save up to 100 elements
 		 LoadingCache<Integer, String> cache = 
 		         CacheBuilder.newBuilder()
-		            .maximumSize(100) // can save up to 100 elements 
-		            .expireAfterAccess(30, TimeUnit.MINUTES) // expires after 30 minutes of access
+		            .maximumSize(100) 
+		            .expireAfterAccess(30, TimeUnit.MINUTES) 
 		            .build(new CacheLoader<Integer, String>(){ 
 		               @Override
 		               public String load(Integer id) throws Exception {
@@ -179,8 +179,9 @@ public class Guava {
 			oddNumbers.add(i);
 		}
 		Set<Integer> primeNumbers = ImmutableSet.of(2, 3, 5, 7);
-
-		SetView<Integer> intersection = Sets.intersection(primeNumbers, oddNumbers); // 3, 5, 7
+		
+		// 3, 5, 7
+		SetView<Integer> intersection = Sets.intersection(primeNumbers, oddNumbers); 
 	}
 	
 	/*Split a String*/
@@ -215,7 +216,8 @@ public class Guava {
 		}
 		Set<Integer> primeNumbers = ImmutableSet.of(2, 3, 5, 7);
 
-		SetView<Integer> union = Sets.union(primeNumbers, oddNumbers); // 2, 3, 5, 7, 1, 9	
+		// 2, 3, 5, 7, 1, 9
+		SetView<Integer> union = Sets.union(primeNumbers, oddNumbers); 	
 	}
 	
 	/*Read all the lines from a file at a time*/
@@ -270,37 +272,35 @@ public class Guava {
 		String text = "SampleText";
 		System.out.println(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, text));
 	}
-	
-	/*Handle null values with Optional*/
-	public void optional() {
-		Optional<String> fromNull = Optional.fromNullable(null);
-		if (fromNull.isPresent()) {
-			System.out.println(fromNull.get());
-		} else {
-			System.out.println("Value is null");
-		}
-	}
-	
+		
 	/*Create a mutable graph*/
 	public void createMutableGraph() {
 		MutableGraph<Integer> graph = GraphBuilder.directed().build();
 		graph.addNode(1);
-		graph.putEdge(2, 3);  // also adds nodes 2 and 3, if not already present
-
-		Set<Integer> successorsOfTwo = graph.successors(2); // returns {3}
+		
+		// also add nodes 2 and 3, if not already present
+		graph.putEdge(2, 3);  
+		
+		// return {3}
+		Set<Integer> successorsOfTwo = graph.successors(2); 
 	}
 	
 	/*Create a mutable value graph*/
 	public void createMutableValueGraph() {
 		MutableValueGraph<Integer, Double> weightedGraph = ValueGraphBuilder.directed().build();
 		weightedGraph.addNode(1);
-		weightedGraph.putEdgeValue(2, 3, 1.5);  // also adds nodes 2 and 3, if not already present
-		weightedGraph.putEdgeValue(3, 5, 1.5);  // edge values (like Map values) do not need to be unique
+		
+		// also add nodes 2 and 3, if not already present
+		weightedGraph.putEdgeValue(2, 3, 1.5);  
+		
+		// edge values (like Map values) do not need to be unique
+		weightedGraph.putEdgeValue(3, 5, 1.5);  
 	}
 	
 	/*Check if graph contains element*/
 	public void verifyElementInGraph() {
 		MutableGraph<Integer> graph = GraphBuilder.directed().build();
+		
 		//Adds 1 and 2 as nodes of this graph, and put an edge between them
 		graph.putEdge(1, 2);  
 		boolean isNodePresent = graph.nodes().contains(1);
